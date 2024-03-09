@@ -147,7 +147,23 @@
   }
 }
 
-
+.Instudentdetail {
+  TEXT-SHADOW: 0 0 BLACK;
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  top: 2px;
+  left: 0;
+  width: 1100Px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  position: relative;
+  z-index: 100;
+  border-radius: 4px;
+  border-radius: var(--br-lgi);
+}
 
 
 
@@ -245,7 +261,7 @@
   }
 }
 
-.btn101 {
+/* .btn101 {
   font-size: 21px;
   bottom: 90%;
   left: 2%;
@@ -296,7 +312,31 @@
 
 .btn103 {
   font-size: 21px;
-  bottom: 77%;
+  bottom: 74%;
+  left: 2%;
+  right: 2%;
+  position: absolute;
+  padding: 5px 68px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn104 {
+  font-size: 21px;
+  bottom: 69%;
   left: 2%;
   right: 2%;
   position: absolute;
@@ -316,7 +356,58 @@
   &:focus {
     outline: none;
   }
+} */
+
+.form-groupin101 {
+  margin-right: 10px;
+  /* Adjust the spacing between buttons */
+  margin-top: 10px;
+
 }
+
+.btn101,
+.btn102,
+.btn103,
+.btn104 {
+  font-size: 21px;
+  width: 210px;
+  /* Set a fixed width for all buttons */
+  padding: 20px 0;
+  /* Adjust vertical padding if necessary */
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+}
+
+.btn101:hover,
+.btn102:hover,
+.btn103:hover,
+.btn104:hover {
+  background-color: #08783e;
+}
+
+.btn101:focus,
+.btn102:focus,
+.btn103:focus,
+.btn104:focus {
+  outline: none;
+  background-color: #b40c0c;
+}
+
+
+
+.btn101,
+.btn102,
+.btn103,
+.btn104.active {
+  background-color: #3498db;
+}
+
+
 
 .neiuLogoIcon {
   position: absolute;
@@ -378,6 +469,21 @@
 
 /* Student Search */
 
+
+.InSearchUsermenu {
+  position: absolute;
+  top: 2%;
+  left: 0%;
+  /* background-color: #003da7; */
+  width: 100%;
+  height: 80%;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+  border-radius: var(--br-lgi);
+  z-index: 100;
+
+}
 
 .SSmenu {
   position: absolute;
