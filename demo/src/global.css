@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+body {
+  margin: 0;
+  line-height: normal;
+}
+:root {
+  /* fonts */
+  --font-inter: Inter;
+
+  /* font sizes */
+  --font-size-base: 16px;
+  --font-size-13xl: 32px;
+  --font-size-sm: 14px;
+  --font-size-mini: 15px;
+  --font-size-4xl-6: 23.6px;
+
+  /* Colors */
+  --color-white: #fff;
+  --color-black: #000;
+  --color-gainsboro: #d9d9d9;
+  --color-darkslateblue: #1f4f97;
+  --color-dimgray-100: #6a6a6a;
+  --color-dimgray-200: #5d5d5d;
+  --color-whitesmoke: #f0f0f0;
+  --color-dodgerblue: #3f8cff;
+  --color-gray: #787878;
+
+  /* border radiuses */
+  --br-lgi: 19px;
+  --br-7xl: 26px;
+  --br-10xs: 3px;
+  --br-14xl: 33px;
+  --br-9xs: 4px;
+  --br-11xs: 2px;
+  --br-3xl-5: 22.5px;
+  --br-8xl-5: 27.5px;
+}

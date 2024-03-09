@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b3dede70.css",
+    "main.js": "/static/js/main.ea40aab5.js",
+    "static/media/NEIU_El_Centro.jpeg": "/static/media/NEIU_El_Centro.ece616f24a7003b18225.jpeg",
+    "static/media/Background.jpg": "/static/media/Background.1db03e08b3108a8ba5c1.jpg",
+    "index.html": "/index.html",
+    "main.b3dede70.css.map": "/static/css/main.b3dede70.css.map",
+    "main.ea40aab5.js.map": "/static/js/main.ea40aab5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b3dede70.css",
+    "static/js/main.ea40aab5.js"
+  ]
+}

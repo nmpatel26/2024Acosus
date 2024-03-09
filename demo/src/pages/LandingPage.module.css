@@ -1,0 +1,390 @@
+
+/* New Code  */
+
+.header {
+  font-size: 24px;
+  font-family: "Open Sans", sans-serif;
+  color: #ffffff;
+  text-decoration: underline;
+
+}
+
+
+.loginChild,
+.loginItem {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 100%;
+}
+
+/* Body Background */
+.loginItem {
+  top: 108px;
+  left: 0px;
+  bottom: 108Px;
+  border-radius: var(--br-5xl);
+  /* background-color: var(--color-whitesmoke); */
+  width: 100%;
+  height: 100%;
+  background-image: url("/public/Background.jpg");
+  /*Path for bg image*/
+  background-size: cover;
+  background-color: #cccccc;
+  z-index: 0;
+}
+
+/* header Background */
+.loginInner {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  background-color: var(--color-darkslateblue);
+  width: 100%;
+  height: 100px;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+}
+
+/* Slidebar */
+.Slidebar {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  background-color: #FFC72C;
+  width: 230px;
+  height: 100%;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+  z-index: 0;
+  
+  
+}
+
+.check1 {
+  position: absolute;
+  top: 20%;
+  left: 65%;
+  background-color: #FFC72C;
+  width: 330px;
+  height: 50%;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+  border-radius: var(--br-lgi);
+  z-index: 0;
+  
+}
+
+
+.landingpageChild5 {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  border-radius: var(--br-lgi);
+  background-color: #ffffff;
+  width: 80%;
+  height: 18%;
+  background-color: var(--color-darkslateblue);
+  z-index: 100;
+}
+.checklist1 {
+  position: absolute;
+  top: 20%;
+  left: 32%;
+  font-weight: 600;
+  color: #ffffff;
+  z-index: 100;
+}
+
+.btn4 {
+  font-size: 21px;
+  bottom: 60%;
+  left: 18%;
+  position: absolute;
+  padding: 5px 48px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn5 {
+  font-size: 21px;
+  bottom: 40%;
+  left: 18%;
+  position: absolute;
+  padding: 5px 30px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/* user details */
+.menubar {
+  position: absolute;
+  top: 20%;
+  left: 6%;
+  background-color: #003da7;
+  width: 58%;
+  height: 50%;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+  border-radius: var(--br-lgi);
+  z-index: 100;
+  
+}
+
+.rectangleIcon1 {
+  position: absolute;
+  top: 10%;
+  left: 4%;
+  width: 150px;
+  height: 150px;
+
+}
+
+.User {
+  position: absolute;
+  top: 8%;
+  left: 28%;
+  font-size: 36px;
+  font-weight: 800;
+  color: #FFC72C;
+}
+.computerScience {
+  position: absolute;
+  top: 24%;
+  left: 28%;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+/* Header Font */
+.neiu {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  font-size: var(--font-size-13xl);
+  text-align: left;
+  font-family: var(--font-inter);
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 20px;
+  z-index: 99;
+}
+
+/* Body crediantal Background */
+.loginGroupChild {
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  top: 7%;
+  left: 5%;
+  width: 1100Px;
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  /* align-items: top; */
+  /* margin-top: 20px; */
+  position: relative;
+  z-index: 99;
+  background-color: #003da7;
+  box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+  border-radius: 4px;
+  border-radius: var(--br-lgi);
+
+}
+
+/* Email and password with buttons form */
+.form {
+  top: 10%;
+  left: 0%;
+  /* margin-top: 2em; */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  color: #ffffff;
+  z-index: 99;
+
+}
+
+.loginGroup {
+  top: 0%;
+  left: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 300px; */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+
+
+  label {
+    font-size: 20px;
+  }
+
+  input {
+    margin-top: 6px;
+    min-width: 18em;
+    height: 37px;
+    padding: 0px 10px;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    background-color: #f3f3f3;
+    border: 0;
+    border-radius: 4px;
+    margin-bottom: 31px;
+    transition: all 250ms ease-in-out;
+
+    &:hover {
+      background-color: #ffffff;
+      box-shadow: 0px 0px 14px 0.3px #0e81ce96;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 12px 0.8px #3474dbb2;
+    }
+  }
+}
+
+.btn11 {
+  font-size: 21px;
+  bottom: 90%;
+  left: 2%;
+  position: absolute;
+  padding: 5px 76px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+.btn21 {
+  font-size: 21px;
+  bottom: 85%;
+  left: 2%;
+  position: absolute;
+  padding: 5px 68px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn31 {
+  font-size: 21px;
+  bottom: 80%;
+  left: 2%;
+  position: absolute;
+  padding: 5px 22px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn3 {
+  font-size: 21px;
+  bottom: 75%;
+  left: 2%;
+  position: absolute;
+  padding: 5px 73px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.neiuLogoIcon {
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  width: 75px;
+  height: 72px;
+  object-fit: cover;
+  z-index: 1;
+  /* Higher value elements are in front */
+  position: relative;
+  /* or absolute, fixed, or sticky */
+
+}
