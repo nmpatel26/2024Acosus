@@ -560,7 +560,7 @@ const Instructor = () => {
                             </div> */}
 
                             <div class="form-groupin101">
-                                <button onClick={() => setMenuContent("default")} className="btn101" > Instructor Home </button>
+                                <button onClick={() => setMenuContent("default")} className="btn101" > Advisor Home </button>
                             </div>
                             <div class="form-groupin101">
                                 <button onClick={() => setMenuContent("StudentDetails")} className="btn102" >Student Details </button>

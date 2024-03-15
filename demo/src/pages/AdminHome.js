@@ -171,7 +171,7 @@ const AdminHome = () => {
                                     <button onClick={TraingHome} className="btnth" > Training Home </button>
                                 </div>
                                 <div className="form-group">
-                                    <button onClick={Instructorcreateaccount} className="btnal" > Advisor Login </button>
+                                    <button onClick={Instructorcreateaccount} className="btnal" > Create Advisor Account </button>
                                 </div>
 
                             </div>
