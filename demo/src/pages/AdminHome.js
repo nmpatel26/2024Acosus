@@ -182,7 +182,7 @@ const AdminHome = () => {
 
                     <div className="Studentdatamd">
                         {/* <button onClick={serverSideLogout} className="btn3" > Logout </button> */}
-                        <div style={{ width: "auto" }}>
+                        <div style={{ width: "Auto", maxHeight: "400px", overflowY: "auto" }}>
                             <table style={{ width: 500 }}>
                                 <tbody>
                                 <tr>

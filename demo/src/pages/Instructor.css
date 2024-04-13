@@ -368,7 +368,8 @@
 .btn101,
 .btn102,
 .btn103,
-.btn104 {
+.btn104,
+.btn105 {
   font-size: 21px;
   width: 210px;
   /* Set a fixed width for all buttons */
@@ -386,14 +387,16 @@
 .btn101:hover,
 .btn102:hover,
 .btn103:hover,
-.btn104:hover {
+.btn104:hover,
+.btn105:hover {
   background-color: #08783e;
 }
 
 .btn101:focus,
 .btn102:focus,
 .btn103:focus,
-.btn104:focus {
+.btn104:focus,
+.btn105:focus {
   outline: none;
   background-color: #b40c0c;
 }
@@ -403,7 +406,8 @@
 .btn101,
 .btn102,
 .btn103,
-.btn104.active {
+.btn104,
+.btn105.active {
   background-color: #3498db;
 }
 
@@ -1086,3 +1090,271 @@ select {
 }
 
 /* Other styles remain the same */
+
+
+/* Student Side */
+
+.form1 {
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  margin-left: 60px;
+  gap: 20px; /* Adjust this value to change the space between buttons */
+}
+
+.rectangleIcon1 {
+  position: absolute;
+  top: 10%;
+  left: 4%;
+  width: 150px;
+  height: 150px;
+
+}
+.User {
+  position: absolute;
+  top: 8%;
+  left: 28%;
+  font-size: 36px;
+  font-weight: 800;
+  color: #FFC72C;
+}
+.computerScience {
+  position: absolute;
+  top: 24%;
+  left: 28%;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+.demographicform {
+  top: 1%;
+  left: 0%;
+  /* margin-top: 2em; */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  color: #ffffff;
+  z-index: 99;
+
+}
+.demographicformContainer {
+  width: 100%;
+  margin: 25Px 15px;
+  padding: 30px;
+  width: Auto;
+  height: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* text-align: justify; */
+}
+
+.demographicbtnsubmit {
+  font-size: 21px;
+  bottom: 10Px;
+  left: 40%;
+  position: absolute;
+  padding: 8px 58px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  /* transition: all 250ms ease-in-out; */
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.Questionaireform {
+  top: 5%;
+  left: 0%;
+  /* margin-top: 2em; */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  color: #ffffff;
+  z-index: 99;
+
+}
+
+.QuestionaireformContainer {
+  width: 100%;
+  margin: 25Px 15px;
+  padding: 30px;
+
+  width: Auto;
+  height: 450px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* text-align: justify; */
+}
+
+.Questionairebtnsubmit {
+  font-size: 21px;
+  bottom: 10Px;
+  left: 40%;
+  position: absolute;
+  padding: 8px 58px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  /* transition: all 250ms ease-in-out; */
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.Personalityform {
+  top: 10%;
+  left: 0%;
+  /* margin-top: 2em; */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  color: #ffffff;
+  z-index: 99;
+
+}
+
+.Personality {
+  width: 100%;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 5px;
+  margin-bottom: 20%;
+}
+
+
+.PersonalityformContainer {
+  width: 100%;
+  margin: 25Px 15px;
+  padding: 30px;
+
+  width: Auto;
+  height: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* text-align: justify; */
+}
+
+.Personalitybtnredirect {
+  font-size: 21px;
+  bottom: 350px;
+  left: 410px;
+  position: absolute;
+  padding: 8px 58px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  /* transition: all 250ms ease-in-out; */
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.Personalitybtnsubmit {
+  font-size: 21px;
+  bottom: 150px;
+  left: 410Px;
+  position: absolute;
+  padding: 8px 85px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  /* transition: all 250ms ease-in-out; */
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.AssesmentResult {
+  width: 100%;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.AssesmentResultmenubar {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 1000px;
+  height: 400Px;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+  border-radius: var(--br-lgi);
+  z-index: 100;
+  
+}
+
+
+.Settingscenterbar {
+  position: absolute;
+  top: 5Px;
+  left: 1%;
+  width: Auto;
+  height: Auto;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+  border-radius: var(--br-lgi);
+  z-index: 100;
+  
+  
+}
+
+.Settingsbtnsubmit {
+  font-size: 21px;
+  bottom: 10%;
+  left: 40%;
+  position: absolute;
+  padding: 8px 58px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  /* transition: all 250ms ease-in-out; */
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+/* You can add additional styles as needed */
