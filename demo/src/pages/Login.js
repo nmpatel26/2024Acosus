@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Login.module.css";
+
 
 import axios from 'axios';
 
@@ -40,7 +40,7 @@ const Login = () => {
     localStorage.setItem('email', email);
   };
 
-  
+
   const saveuserTypeToLocalStorage = (userType) => {
     localStorage.setItem('userType', userType);
   };
@@ -73,7 +73,7 @@ const Login = () => {
     });
 
     if (response.data.status === 'ok') {
-      const { fname, lname, email, userType} = response.data.data.user; // Add email extraction
+      const { fname, lname, email, userType } = response.data.data.user; // Add email extraction
       const fullName = `${fname} ${lname}`;
       setFullName(fullName);
       saveFullNameToLocalStorage(fullName);
@@ -91,48 +91,84 @@ const Login = () => {
   return (
 
     <div className="background">
-      <div className={styles.loginChild} />
-      <div className={styles.loginInner} />
-      <img className={styles.neiuLogoIcon} alt="NEIU Logo" src="newlogo.png" /> {/* Add this line for the image */}
-      <div className={styles.neiu} style={{ left: '90px' }}> AI-driven Counseling System for Transfer Students </div>
+      <div className="loginChild">
 
-      <div className={styles.image1} />
-      <img className={styles.image2} alt="NEIU" src="Login1.png" /> {/* Add this line for the image */}
-
-      <div className={styles.loginItem}>
+        <div className="loginInner">
+          <img className="neiuLogoIcon" alt="NEIU Logo" src="newlogo.png" /> {/* Add this line for the image */}
+          <div className="neiu" style={{ left: '90px' }}> AI-driven Counseling System for Transfer Students </div>
+        </div>
 
 
-        <div className={styles.loginGroupChild}>
-
-          <div className={styles.content}>
-
-            <form onSubmit={handleSubmit}>
-
-              <div className={styles.form}>
+        <div className="loginItem">
 
 
-                <div className={styles.fontemail}> Email: </div>
-                <input className={styles.email} type="text" name="Email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                <div className={styles.fontpassword}> Password: </div>
-                <input className={styles.password} type="password" name="Password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <button className={styles.btn1} type="submit"> Login</button>
+          <div className="loginGroupChild">
 
-                <div className={styles.createAccountText} onClick={onCreateAccountTextClick}>
-                  <div className={styles.createAccountTextChild} />
-                  <button className={styles.btn2} type="submit">Create Account</button>
+            <div >
+              <div className="image1" />
+              <img className="image2" alt="NEIU" src="Login1.png" /> {/* Add this line for the image */}
 
+
+              <form onSubmit={handleSubmit}>
+
+                <div className="form">
+                  <div  style={{ textAlign: 'center' }}>
+                    <label>Log Into ACOSUS</label>
+                  </div>  
+
+                  <div className="formGroup121">
+                    <input
+                      id="email"
+                      type="email"
+                      className="input121"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="formGroup121">
+                    <input
+                      className="input121" type="password" name="Password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="formgroup121">
+                    <button className="btn1001" type="submit">Login</button>
+                    <button className="btn1002" onClick={onForgotPasswordTextClick}>Forgot Password</button>
+                  </div>
+                  <div className="formgroup121">
+                    <button className="btn1003" onClick={onCreateAccountTextClick}>Create Account</button>
+                  </div>
+
+
+
+
+
+                  {/* <div className="fontemail"> Email: </div>
+                <input className="email" type="text" name="Email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <div className="fontpassword"> Password: </div>
+                <input className="password" type="password" name="Password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required /> */}
+                  {/* <button className="btn1" type="submit"> Login</button>
+
+                  <div className="createAccountText" onClick={onCreateAccountTextClick}>
+                    <div className="createAccountTextChild" />
+                    <button className="btn2" type="submit">Create Account</button>
+
+                  </div>
+                  <div className="forgotPasswordText" onClick={onForgotPasswordTextClick}>
+                    <div className="forgotPasswordTextChild" />
+                    <button className="btn3" type="submit">Forgot password</button>
+
+                  </div> */}
                 </div>
-                <div className={styles.forgotPasswordText} onClick={onForgotPasswordTextClick}>
-                  <div className={styles.forgotPasswordTextChild} />
-                  <button className={styles.btn3} type="submit">Forgot password</button>
-
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
 
 
   );

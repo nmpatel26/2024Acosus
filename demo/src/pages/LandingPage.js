@@ -1,6 +1,7 @@
 import { useCallback, useRef } from "react";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 // import styles from "./LandingPage.module.css";
 
 import "./Instructor.css";
@@ -8,12 +9,7 @@ import "./Instructor.css";
 const ToDemographic = () => {
 
     const [submitted, setSubmitted] = useState(false);
-    const Assesmentresult = () => {
 
-        window.location.href = "../Assesmentresult";
-
-
-    };
 
     useEffect(() => {
         const email = localStorage.getItem('email');
@@ -271,7 +267,6 @@ const ToQuestionaire = () => {
     const [submitted, setSubmitted] = useState(false);
 
 
-
     const confirmation = () => {
 
         // alert('Form saved sucessfully');
@@ -279,59 +274,6 @@ const ToQuestionaire = () => {
 
     };
 
-
-    const serverSideLogout = () => {
-        fetch('http://localhost:5000/logout', {
-            method: 'POST',
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'ok') {
-                    // Clear local storage and redirect to login page after successful logout
-                    localStorage.clear();
-                    window.location.href = "../login";
-
-                } else {
-                    console.error(data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    };
-
-
-    useEffect(() => {
-
-        const checkLoggedIn = () => {
-            const email = localStorage.getItem('email');
-            if (email === null) {
-                window.location.href = '../login';
-                alert("Please login first.")
-            }
-        };
-
-        checkLoggedIn();
-    }, []);
-
-
-    useEffect(() => {
-        const logoutTimeout = 600000;
-
-        const resetLogoutTimeout = () => {
-            clearTimeout(logoutTimeoutRef.current);
-            logoutTimeoutRef.current = setTimeout(serverSideLogout, logoutTimeout);
-        };
-
-        document.addEventListener("mousemove", resetLogoutTimeout);
-        document.addEventListener("keydown", resetLogoutTimeout);
-
-        return () => {
-            clearTimeout(logoutTimeoutRef.current);
-            document.removeEventListener("mousemove", resetLogoutTimeout);
-            document.removeEventListener("keydown", resetLogoutTimeout);
-        };
-    }, []);
 
     const [gpa, setGpa] = useState("");
     const [credits, setCredits] = useState("");
@@ -830,9 +772,6 @@ const ToPersonality = () => {
 };
 
 const ToAssesmentResult = () => {
-
-
-
 
 
     useEffect(() => {
