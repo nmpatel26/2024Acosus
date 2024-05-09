@@ -6,8 +6,6 @@ import {
 } from "react-router-dom";
 
 import Login from "./pages/Login";
-import CreateAccount from "./pages/CreateAccount";
-import ForgotPassword from "./pages/ForgotPassword";
 import Admin from "./pages/Admin";
 import TraingHome from "./pages/TraingHome";
 import Instructor from "./pages/Instructor"
@@ -126,10 +124,6 @@ function App() {
       <Route path="/" element={<Login />} />
 
       <Route path="/login" element={<Login />} />
-
-
-      <Route path="/forgotpassword" element={<ForgotPassword />} />
-      <Route path="/createaccount" element={<CreateAccount />} />
 
       <Route path="/Admin" element={<Admin />} />
       <Route path="/TraingHome" element={<TraingHome />} />
