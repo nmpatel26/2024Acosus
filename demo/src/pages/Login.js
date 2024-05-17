@@ -1,52 +1,47 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { HOST_URL } from "../utils/constants";
 
-
-import axios from 'axios';
-
+import axios from "axios";
 
 const ToCreateAccount = () => {
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rePassword, setRePassword] = useState('');
-  const [userType, setuserType] = useState('');
-  const [adminKey, setadminKey] = useState('');
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
+  const [userType, setuserType] = useState("");
+  const [adminKey, setadminKey] = useState("");
 
   const onLoginButtonContainerClick = useCallback(() => {
     navigate("/login");
   }, [navigate]);
 
-
   const handleSubmit = async (e) => {
-
     if (userType == "Admin" && adminKey != "Nikunj") {
       e.preventDefault();
       alert("Invalid Admin Key");
     } else {
-
       e.preventDefault();
       if (password !== rePassword) {
         alert("Passwords do not match");
         return;
       }
-      const response = await axios.post('http://localhost:5000/register', {
+      const response = await axios.post(`${HOST_URL}/register`, {
+        //'http://localhost:5000/register'
         fname: firstName,
         lname: lastName,
         email: email,
         password,
         userType,
       });
-      if (response.data.status === 'ok') {
+      if (response.data.status === "ok") {
         navigate("/login");
       } else {
         alert(response.data.error);
       }
-
     }
   };
 
@@ -56,92 +51,149 @@ const ToCreateAccount = () => {
   };
 
   return (
-
     <div className="registerbackground">
-
-
-
-      <form className="registergroup" onSubmit={handleSubmit}>
-      <div style={{ textAlign: 'center',  fontSize: "25Px"  }}>
-          <heading >Register</heading>
+      <form
+        className="registergroup"
+        onSubmit={handleSubmit}
+      >
+        <div style={{ textAlign: "center", fontSize: "25Px" }}>
+          <heading>Register</heading>
         </div>
 
         <div className="form">
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <label class="radio-inline">
-              <input class="radio-label" Type="radio" name="UserType" value="User" onChange={(e) => setuserType(e.target.value)} required />
-              User</label>
+              <input
+                class="radio-label"
+                Type="radio"
+                name="UserType"
+                value="User"
+                onChange={(e) => setuserType(e.target.value)}
+                required
+              />
+              User
+            </label>
             <label class="radio-inline">
-              <input class="radio-label" Type="radio" name="UserType" value="Admin" onChange={(e) => setuserType(e.target.value)} required />
-              Admin</label>
+              <input
+                class="radio-label"
+                Type="radio"
+                name="UserType"
+                value="Admin"
+                onChange={(e) => setuserType(e.target.value)}
+                required
+              />
+              Admin
+            </label>
           </div>
 
           {userType == "Admin" ? (
-
             <div className="formgroup">
-              <label >Admin Key</label>
-              <input placeholder="Admin Key" type="password" value={adminKey} onChange={(e) => setadminKey(e.target.value)} required />
+              <label>Admin Key</label>
+              <input
+                placeholder="Admin Key"
+                type="password"
+                value={adminKey}
+                onChange={(e) => setadminKey(e.target.value)}
+                required
+              />
             </div>
-
           ) : null}
-
 
           <div className="formgroup121">
             <label htmlFor="firstname">First Name</label>
-            <input placeholder="First Name" type="Text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+            <input
+              placeholder="First Name"
+              type="Text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
           </div>
           <div className="formgroup121">
             <label htmlFor="firstname">Last Name</label>
-            <input placeholder="Last Name"  type="Text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+            <input
+              placeholder="Last Name"
+              type="Text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
           </div>
           <div className="formgroup121">
             <label htmlFor="firstname">Email</label>
-            <input placeholder="Email" Type="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <input
+              placeholder="Email"
+              Type="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
           <div className="formgroup121">
             <label htmlFor="firstname">Password</label>
-            <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           <div className="formgroup121">
             <label htmlFor="firstname">Re-type Password</label>
-            <input placeholder="Re-type Password" type="password" value={rePassword} onChange={(e) => setRePassword(e.target.value)} required />
+            <input
+              placeholder="Re-type Password"
+              type="password"
+              value={rePassword}
+              onChange={(e) => setRePassword(e.target.value)}
+              required
+            />
           </div>
-         
+
           <div className="formgroup121">
-            <button  className="btn1001" type="submit">Register</button>
-            <button onClick={refreshSession} className="btn1002"> Login </button>
+            <button
+              className="btn1001"
+              type="submit"
+            >
+              Register
+            </button>
+            <button
+              onClick={refreshSession}
+              className="btn1002"
+            >
+              {" "}
+              Login{" "}
+            </button>
           </div>
         </div>
-
       </form>
     </div>
-
   );
 };
 
 const ToForgotPassword = () => {
-
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    const confirmation = window.confirm("If you have registered with us you will receive a reset link shortly, click confirm to continue. ");
+    const confirmation = window.confirm(
+      "If you have registered with us you will receive a reset link shortly, click confirm to continue. "
+    );
     if (confirmation) {
       try {
-        const response = await axios.post('http://localhost:5000/ForgotPassword', {
-          email
+        const response = await axios.post(`${HOST_URL}/ForgotPassword`, {
+          //'http://localhost:5000/ForgotPassword'
+          email,
         });
 
-        if (response.data.status === 'ok') {
-          setMessage('Email with reset password link sent successfully.');
-          setError('');
+        if (response.data.status === "ok") {
+          setMessage("Email with reset password link sent successfully.");
+          setError("");
         } else {
-          setError('Something went wrong. Please try again.');
-          setMessage('');
+          setError("Something went wrong. Please try again.");
+          setMessage("");
         }
       } catch (error) {
         if (error.response) {
@@ -151,10 +203,12 @@ const ToForgotPassword = () => {
         } else if (error.request) {
           console.log(error.request);
         } else {
-          console.log('Error', error.message);
+          console.log("Error", error.message);
         }
-        setError('Failed to send request. Please check your network connection and try again.');
-        setMessage('');
+        setError(
+          "Failed to send request. Please check your network connection and try again."
+        );
+        setMessage("");
       }
     }
   };
@@ -164,51 +218,61 @@ const ToForgotPassword = () => {
   };
   return (
     <div className="loginGroupChild">
-      <img className="imgforgotpassword" alt="NEIU" src="forgot.png" />
-
-
+      <img
+        className="imgforgotpassword"
+        alt="NEIU"
+        src="forgot.png"
+      />
 
       <div className="forgotpasswordform123">
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: "center" }}>
           <label>Password Reset</label>
         </div>
 
-        <div className="email"> <input
-          id="email"
-          type="email"
-          className="emailInput"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        /></div>
+        <div className="email">
+          {" "}
+          <input
+            id="email"
+            type="email"
+            className="emailInput"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
         {message && <p className="successMessage">{message}</p>}
         {error && <p className="errorMessage">{error}</p>}
 
         <div className="formgroup121">
-          <button onClick={handleForgotPassword} className="btn1001">Reset Password</button>
-          <button onClick={refreshSession} className="btn1002"> Login </button>
+          <button
+            onClick={handleForgotPassword}
+            className="btn1001"
+          >
+            Reset Password
+          </button>
+          <button
+            onClick={refreshSession}
+            className="btn1002"
+          >
+            {" "}
+            Login{" "}
+          </button>
         </div>
       </div>
     </div>
-
-
-
-
-
-
   );
 };
 
 const Login = () => {
-
   useEffect(() => {
     const checkLoggedIn = () => {
-      const email = localStorage.getItem('email');
-      if (email) { // Check if email is truthy (not null)
+      const email = localStorage.getItem("email");
+      if (email) {
+        // Check if email is truthy (not null)
         // window.location.href = './landing';
-        window.location.href = './admin';
+        window.location.href = "./admin";
       }
     };
 
@@ -217,9 +281,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState(''); // Updated state variable name]
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState(""); // Updated state variable name]
 
   const onCreateAccountTextClick = useCallback(() => {
     navigate("/createaccount");
@@ -230,21 +294,19 @@ const Login = () => {
   }, [navigate]);
 
   const saveFullNameToLocalStorage = (name) => {
-    localStorage.setItem('fullName', name);
+    localStorage.setItem("fullName", name);
   };
 
   const saveEmailToLocalStorage = (email) => {
-    localStorage.setItem('email', email);
+    localStorage.setItem("email", email);
   };
-
 
   const saveuserTypeToLocalStorage = (userType) => {
-    localStorage.setItem('userType', userType);
+    localStorage.setItem("userType", userType);
   };
 
-
   const retrieveFullNameFromLocalStorage = () => {
-    const storedFullName = localStorage.getItem('fullName');
+    const storedFullName = localStorage.getItem("fullName");
     if (storedFullName) {
       setFullName(storedFullName);
     }
@@ -256,7 +318,7 @@ const Login = () => {
   }, []);
 
   const retrieveEmailFromLocalStorage = () => {
-    const storedEmail = localStorage.getItem('email');
+    const storedEmail = localStorage.getItem("email");
     if (storedEmail) {
       setEmail(storedEmail);
     }
@@ -264,12 +326,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post('http://localhost:5000/login-user', {
+    const response = await axios.post(`${HOST_URL}/login-user`, {
+      //'http://localhost:5000/login-user'
       email: email,
-      password
+      password,
     });
 
-    if (response.data.status === 'ok') {
+    if (response.data.status === "ok") {
       const { fname, lname, email, userType } = response.data.data.user; // Add email extraction
       const fullName = `${fname} ${lname}`;
       setFullName(fullName);
@@ -285,30 +348,38 @@ const Login = () => {
   };
   const [menuContent, setMenuContent] = useState("default");
 
-
   return (
-
     <div className="background">
       <div className="loginChild">
-
         <div className="loginInner">
-          <img className="neiuLogoIcon" alt="NEIU Logo" src="newlogo.png" /> {/* Add this line for the image */}
-          <div className="neiu" style={{ left: '90px' }}> AI-driven Counseling System for Transfer Students </div>
+          <img
+            className="neiuLogoIcon"
+            alt="NEIU Logo"
+            src="newlogo.png"
+          />{" "}
+          {/* Add this line for the image */}
+          <div
+            className="neiu"
+            style={{ left: "90px" }}
+          >
+            {" "}
+            AI-driven Counseling System for Transfer Students{" "}
+          </div>
         </div>
         <div className="loginItem">
-
           {menuContent === "default" && (
             <div>
               {
-
                 <div className="loginGroupChild">
-
-
-                  <img className="image2" alt="NEIU" src="Login1.png" /> {/* Add this line for the image */}
-
+                  <img
+                    className="image2"
+                    alt="NEIU"
+                    src="Login1.png"
+                  />{" "}
+                  {/* Add this line for the image */}
                   <form onSubmit={handleSubmit}>
                     <div className="login123">
-                      <div style={{ textAlign: 'center' }}>
+                      <div style={{ textAlign: "center" }}>
                         <label>Log Into ACOSUS</label>
                       </div>
                       <div className="formGroup121">
@@ -324,11 +395,16 @@ const Login = () => {
                       </div>
                       <div className="formGroup121">
                         <input
-                          className="input121" type="password" name="Password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
+                          className="input121"
+                          type="password"
+                          name="Password"
+                          placeholder="Password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                           required
                         />
                       </div>
-{/* 
+                      {/* 
                       <div className="formgroup121">
                         <button className="btn1001" type="submit">Login</button>
                         <button className="btn1002" onClick={onForgotPasswordTextClick}>Forgot Password</button>
@@ -338,44 +414,53 @@ const Login = () => {
                       </div> */}
 
                       <div class="formgroup121">
-                        <button onClick={() => setMenuContent("default")} className="btn1001" type="submit"> Login </button>
+                        <button
+                          onClick={() => setMenuContent("default")}
+                          className="btn1001"
+                          type="submit"
+                        >
+                          {" "}
+                          Login{" "}
+                        </button>
 
-                        <button onClick={() => setMenuContent("ForgotPassword")} className="btn1002" >Forgot Password </button>
+                        <button
+                          onClick={() => setMenuContent("ForgotPassword")}
+                          className="btn1002"
+                        >
+                          Forgot Password{" "}
+                        </button>
                       </div>
                       <div class="formgroup121">
-                        <button onClick={() => setMenuContent("CreateAccount")} className="btn1003" > Create Account </button>
+                        <button
+                          onClick={() => setMenuContent("CreateAccount")}
+                          className="btn1003"
+                        >
+                          {" "}
+                          Create Account{" "}
+                        </button>
                       </div>
                     </div>
                   </form>
                 </div>
-
               }
             </div>
           )}
 
           {menuContent === "ForgotPassword" && (
-            <div className="formin">
-              {<ToForgotPassword />}
-            </div>
+            <div className="formin">{<ToForgotPassword />}</div>
           )}
 
           {menuContent === "CreateAccount" && (
-            <div className="formin">
-              {<ToCreateAccount />}
-            </div>
+            <div className="formin">{<ToCreateAccount />}</div>
           )}
-
         </div>
         {/* </form> */}
-      </div >
-    </div >
+      </div>
+    </div>
     // </div >
     // </div >
     // </div >
-
-
   );
 };
-
 
 export default Login;
