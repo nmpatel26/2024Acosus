@@ -1,8 +1,15 @@
-node_modules
 ./node_modules
 
+
+node_modules
+.env
+.env.development
+.env.production
+
+package-lock.json
+
 /NODE/node_modules
-./NODE/node_modules
+
 /node_modules
 ./server/.DS_Store
 
