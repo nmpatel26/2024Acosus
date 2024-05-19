@@ -661,6 +661,7 @@ const Toquestionare = () => {
     const [scholarship, setScholarship] = useState("");
     const [income, setIncome] = useState("");
     const [proximity, setProximity] = useState("");
+    const [personality, setpersonality] = useState(10);
     const logoutTimeoutRef = useRef(null);
 
 
@@ -678,7 +679,7 @@ const Toquestionare = () => {
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                if (data.gpa && data.credits && data.satScore && data.course && data.career && data.interest && data.experience && data.familyGuide && data.scholarship && data.proximity) {
+                if (data.gpa && data.credits && data.satScore && data.course && data.career && data.interest && data.experience && data.familyGuide && data.scholarship && data.proximity && data.personality) {
                     setSubmitted(true);
                     setGpa(data.gpa || '');
                     setCredits(data.credits || '');
@@ -692,6 +693,7 @@ const Toquestionare = () => {
                     setScholarship(data.scholarship || '');
                     setIncome(data.income || '');
                     setProximity(data.proximity || '');
+                    setpersonality(data.personality || '');
 
 
                 }
@@ -708,6 +710,7 @@ const Toquestionare = () => {
                 setScholarship(data.scholarship || '');
                 setIncome(data.income || '');
                 setProximity(data.proximity || '');
+                setpersonality(data.personality || '');
 
             })
             .catch((error) => {
@@ -760,6 +763,10 @@ const Toquestionare = () => {
         setScholarship(event.target.value);
     };
 
+    const handlePersonalityChange = (event) => {
+        setpersonality(event.target.value);
+    };
+
     const handleIncomeChange = (event) => {
         setIncome(event.target.value);
     };
@@ -801,9 +808,11 @@ const Toquestionare = () => {
                     scholarship: scholarship,
                     income: income,
                     proximity: proximity,
+                    personality: 10,
                 })
             };
 
+            //calling model predict API
             const response = await fetch('http://127.0.0.1:5001/model/predict', request);
             const response_from_api = await response.json();
             const msg_alert = 'Percentage of student qualify is: ' + response_from_api;

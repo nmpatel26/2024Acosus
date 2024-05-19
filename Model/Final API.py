@@ -65,38 +65,41 @@ def transform_data(data):
     index=0
     transform=[]
     for course in data_df['Course']:
-        if str(data_df['Career'][index]).lower() in str(list(major_data['Job Categories'].loc[major_data['IT Major']==course])).lower():
+        if str(data_df['career'][index]).lower() in str(list(major_data['Job Categories'].loc[major_data['IT Major']==course])).lower():
             transform.append(1)
         else:
             transform.append(0)
         index+=1
     transformed_data['Career_Similarity']=transform
-    transformed_data['Student_Exposure']=[StudentExposure[values] for values in data_df['Student_Exposure']]
-    transformed_data['Accessibility']=[0 if int(values)>30 or str(values).lower!='online' else 1 for values in data_df['Accessibility']]
-    encoding_cols=['Family_Contribution','Financial_Status']
+    transformed_data['experience']=[StudentExposure[values] for values in data_df['experience']]
+    transformed_data['proximity']=[0 if int(values)>30 or str(values).lower!='online' else 1 for values in data_df['proximity']]
+    encoding_cols=['familyGuide','income']
     for col in encoding_cols:
         encoded=pd.get_dummies(data_df[col],prefix=col)
         transformed_data=(pd.concat([transformed_data,encoded],axis=1,ignore_index=False))
     #To append only needed columns
-    numerical_cols.remove('Accessibility')
+    numerical_cols.remove('proximity')
     rem_columns=numerical_cols
     transformed_data=pd.concat([transformed_data,data_df[rem_columns]],axis=1)
     print(transformed_data)
 def scaling_data(action):
     action=action
     Min_max_scale = load(open('Model/scale.pkl','rb'))
-    data_order=pandas.DataFrame(columns=['GPA', 'Credit_Completion', 'SAT', 'Course_Similarity',
-   'Student_Interest', 'Student_Exposure', 'PersonalityTraits_Scores',
-   'Accessibility', 'Career_Similarity', 'Family_Contribution_No',
-   'Family_Contribution_Yes', 'Financial_Status_No',
-   'Financial_Status_Yes'])
+    # Obtain the columns expected by the scaler
+    data_order = Min_max_scale.feature_names_in_
+#     data_order=pandas.DataFrame(columns=['gpa', 'credits', 'satScore', 'course',
+#    'interest', 'experience', 'personalityScore',
+#    'proximity', 'Career_Similarity', 'familyGuide_No',
+#    'familyGuide_Yes', 'Financial_Status_No',
+#    'Financial_Status_Yes'])
     global transformed_data
     missing_cols = set( data_order) - set( transformed_data.columns )
     for c in missing_cols:
         transformed_data[c] = 0
+
     # Ensure the order of column in the test set is in the same order than in train set'''
     if str(action).lower()=='predict':
-        transformed_data=transformed_data[data_order.columns]
+        transformed_data=transformed_data[data_order]
         prediction_set=Min_max_scale.transform(transformed_data)
         return(prediction_set)
     elif str(action).lower()=='train':
@@ -111,22 +114,32 @@ def predict():
 
     print("predict function............")
     data = request.data
+    # Decode JSON data and load into a dictionary
+    # data = json.loads(request_data.decode('utf-8'))
     str_data = data.decode('utf-8')
     data = json.loads(str_data)
 
     data_df=pd.DataFrame()
-    data_df['GPA'] = [data['gpa']]
-    data_df['Credit_Completion'] = [data['credits']]
-    data_df['SAT'] = [data['satScore']]
-    data_df['Course_Similarity'] = [data['course']]
-    data_df['Career'] = [data['career']]
+
+    #changed.......
+    # Create DataFrame from the dictionary, transposing to match expected structure
+    data_df = pd.DataFrame.from_dict(data, orient='index').transpose()
     data_df['Course'] = ["Information Systems"]
-    data_df['Student_Interest'] = [data['interest']]
-    data_df['Student_Exposure'] = [data['experience']]
-    data_df['Family_Contribution'] = [data['familyGuide']]
-    data_df['PersonalityTraits_Scores'] = [data['personalityScore']]
-    data_df['Accessibility'] = [data['proximity']]
-    data_df['Financial_Status'] = [data['income']]
+    # for i in data:
+    #     data_df[i] = [data[i]]
+    
+    # data_df['GPA'] = [data['gpa']]
+    # data_df['Credit_Completion'] = [data['credits']]
+    # data_df['SAT'] = [data['satScore']]
+    # data_df['Course_Similarity'] = [data['course']]
+    # data_df['Career'] = [data['career']]
+    # data_df['Course'] = ["Information Systems"]
+    # data_df['Student_Interest'] = [data['interest']]
+    # data_df['Student_Exposure'] = [data['experience']]
+    # data_df['Family_Contribution'] = [data['familyGuide']]
+    # data_df['PersonalityTraits_Scores'] = [data['personalityScore']]
+    # data_df['Accessibility'] = [data['proximity']]
+    # data_df['Financial_Status'] = [data['income']]
 
     print(data)
     # data = request.data
