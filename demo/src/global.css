@@ -5,6 +5,7 @@ body {
   margin: 0;
   line-height: normal;
 }
+
 :root {
   /* fonts */
   --font-inter: Inter;
@@ -40,7 +41,10 @@ body {
 
 /* New Code  */
 
-input[type=Number],[type=Text],[type=email],[type=Password] {
+input[type=Number],
+[type=Text],
+[type=email],
+[type=Password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -251,13 +255,14 @@ input[type=Number],[type=Text],[type=email],[type=Password] {
 }
 
 /* Email and password with buttons form */
-.form {
+.login123 {
   top: 10%;
-  left: 0%;
-  /* margin-top: 2em; */
+  margin-left: -380px;
+  margin-right: 0%;
+  margin-top: 220Px;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  /* align-items: left; */
   color: #ffffff;
   z-index: 99;
 
@@ -743,6 +748,7 @@ select {
 .formin {
   top: 5%;
   left: 0%;
+  margin-bottom: 5%;
   /* margin-top: 2em; */
   display: flex;
   flex-direction: column;
@@ -929,6 +935,7 @@ select {
 .form {
   display: flex;
   justify-content: flex-start;
+  margin-left: 5px;
 }
 
 .form-group1111 {
@@ -1056,7 +1063,7 @@ select {
 
 .btnicon {
   font-size: 15px;
-   margin-top: 8px;
+  margin-top: 8px;
   /* margin-left: 10%;  */
   margin-right: 5px;
   left: 10px;
@@ -1085,22 +1092,27 @@ select {
 .search-fields {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px; /* Adjust margin as needed */
+  margin-bottom: 30px;
+  /* Adjust margin as needed */
 }
 
 .search-fields input {
-  width: calc(33.33% - 1px); /* Adjust width as needed */
+  width: calc(33.33% - 1px);
+  /* Adjust width as needed */
   padding: 10px;
-  margin-right: 10px; /* Adjust margin between inputs */
+  margin-right: 10px;
+  /* Adjust margin between inputs */
   margin-top: 15px;
 }
 
 .search-fields input:last-child {
-  margin-right: 10px; /* Remove margin for the last input to prevent extra space */
+  margin-right: 10px;
+  /* Remove margin for the last input to prevent extra space */
 }
 
 .search-fields input:first-child {
-  margin-left: 10px; /* Remove margin for the last input to prevent extra space */
+  margin-left: 10px;
+  /* Remove margin for the last input to prevent extra space */
 }
 
 
@@ -1115,7 +1127,7 @@ select {
   background-color: #FFC72C;
   padding: 10px;
   z-index: 101;
-  
+
 }
 
 .taskbar-button {
@@ -1132,7 +1144,7 @@ select {
   background-color: #b40c0c;
 }
 
-.taskbar-button:hover{
+.taskbar-button:hover {
   background-color: #08783e;
 }
 
@@ -1146,7 +1158,8 @@ select {
   flex-direction: column;
   margin-top: 70px;
   margin-left: 60px;
-  gap: 20px; /* Adjust this value to change the space between buttons */
+  gap: 20px;
+  /* Adjust this value to change the space between buttons */
 }
 
 .rectangleIcon1 {
@@ -1157,6 +1170,7 @@ select {
   height: 150px;
 
 }
+
 .User {
   position: absolute;
   top: 8%;
@@ -1165,6 +1179,7 @@ select {
   font-weight: 800;
   color: #FFC72C;
 }
+
 .computerScience {
   position: absolute;
   top: 24%;
@@ -1184,6 +1199,7 @@ select {
   z-index: 99;
 
 }
+
 .demographicformContainer {
   width: 100%;
   margin: 25Px 15px;
@@ -1363,7 +1379,7 @@ select {
   font-family: var(--font-inter);
   border-radius: var(--br-lgi);
   z-index: 100;
-  
+
 }
 
 
@@ -1379,8 +1395,8 @@ select {
   font-family: var(--font-inter);
   border-radius: var(--br-lgi);
   z-index: 100;
-  
-  
+
+
 }
 
 .Settingsbtnsubmit {
@@ -1405,10 +1421,31 @@ select {
     outline: none;
   }
 }
+
 /* You can add additional styles as needed */
 
 
 /* Auth.module.css additions */
+/* Body crediantal Background */
+.loginGroupChild {
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  top: 30px;
+  left: 0%;
+  width: 500Px;
+  height: 550Px;
+  display: flex;
+  justify-content: center;
+  /* align-items: top; */
+  margin-top: 20px;
+  position: relative;
+  z-index: 99;
+  background-color: #003da7;
+  box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+  border-radius: 10px;
+
+}
 
 .formGroup121 {
   display: flex;
@@ -1418,25 +1455,28 @@ select {
 }
 
 .label121 {
-  margin-right: 10px; /* Ensures some space between the label and the input box */
-  flex: 10px 0 100px; /* Gives the label a fixed width */
+  margin-right: 10px;
+  /* Ensures some space between the label and the input box */
+  flex: 10px 0 100px;
+  /* Gives the label a fixed width */
   color: var(--color-white);
 }
 
 .input121 {
-  flex: 1; /* Allows the input to fill the rest of the space in the formGroup */
+  flex: 1;
+  /* Allows the input to fill the rest of the space in the formGroup */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.image2{
+.image2 {
   position: absolute;
   top: 15px;
-  left: 50px;
+  left: 0px;
   width: Auto;
   height: 35%;
-  object-fit: cover ;
+  object-fit: cover;
   z-index: 99;
   /* Higher value elements are in front */
   position: relative;
@@ -1445,7 +1485,7 @@ select {
 }
 
 .btn1001,
-.btn1002{
+.btn1002 {
   font-size: 20px;
   width: 180px;
   margin-left: 12px;
@@ -1462,7 +1502,7 @@ select {
   border-radius: var(--br-lgi);
 }
 
-.btn1003{
+.btn1003 {
   font-size: 20px;
   width: 180px;
   margin-left: 100px;
@@ -1479,6 +1519,7 @@ select {
   border-radius: var(--br-lgi);
   /* margin: 20px auto; */
 }
+
 .btn1001:hover,
 .btn1002:hover,
 .btn1003:hover {
@@ -1487,7 +1528,7 @@ select {
 
 .btn1001:focus,
 .btn1002:focus,
-.btn1003:focus{
+.btn1003:focus {
   outline: none;
   background-color: #b40c0c;
 }
@@ -1495,3 +1536,242 @@ select {
 .btn1001.active {
   background-color: rgb(255, 0, 38);
 }
+
+.imgforgotpassword{
+  position: absolute;
+  /* top: px; */
+  /* margin-left: 30px; */
+  width: Auto;
+  height: 350Px;
+  object-fit: cover;
+  z-index: 99;
+  /* Higher value elements are in front */
+  /* position: relative; */
+  /* or absolute, fixed, or sticky */
+}
+
+.forgotpasswordform {
+  margin-top: 0em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  z-index: 99;
+  
+}
+
+.forgotpasswordform123 {
+    margin-left: 0px;
+  margin-right: 0%;
+  margin-top: 300Px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: left; */
+  color: #ffffff;
+  z-index: 99;
+
+}
+
+.heading{
+  font-size: 25Px;
+}
+
+
+
+
+
+/* For Create Account */
+
+
+
+.loginChild{
+  position: absolute;
+  top: 0px;
+  left: 0;
+  background-color: var(--color-white);
+  width: 100%;
+  min-height: 130%;
+  height: auto;
+}
+
+
+
+/* header Background */
+.loginInner {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  background-color: var(--color-darkslateblue);
+  width: 100%;
+  height: 100px;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-inter);
+}
+
+/* Header Font */
+.neiu {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  font-size: var(--font-size-13xl);
+  text-align: left;
+  font-family: var(--font-inter);
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+
+
+.registerbackground {
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  top: 2%;
+  left: 0%;
+  width: 550Px;
+  height: 850Px;
+  display: flex;
+  justify-content: center;
+  /* align-items: top; */
+  margin-top: 20px;
+  margin-bottom: 30px;
+  min-height: 750px;
+  position: relative;
+  z-index: 99;
+  background-color: #003da7;
+  box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+  border-radius: 4px;
+
+}
+
+
+.registergroup {
+  /* top: 0%;
+  left: 0%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500Px;
+  height: Auto;
+}
+
+.radio1 {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: fit-content;
+  width: 400Px;
+}
+
+
+.formgroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* width: fit-content; */
+  width: 400Px;
+
+
+  label {
+    font-size: 18px;
+  }
+
+  input {
+    margin-top: 6px;
+    /* min-width: 18em; */
+    /* width: 200Px; */
+    height: 37px;
+    padding: 0px 10px;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    background-color: #f3f3f3;
+    border: 0;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: all 250ms ease-in-out;
+
+    &:hover {
+      background-color: #ffffff;
+      box-shadow: 0px 0px 14px 0.3px #0e81ce96;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 12px 0.8px #3474dbb2;
+    }
+  }
+}
+
+
+
+.fontemail {
+  position: absolute;
+  top: 52%;
+  left: 45px;
+  font-size: 22px;
+  text-align: left;
+  font-family: var(--font-inter);
+  color: #ffffff;
+}
+
+.fontpassword {
+  position: absolute;
+  top: 65%;
+  left: 28px;
+  font-size: 22px;
+  text-align: left;
+  font-family: var(--font-inter);
+  color: #ffffff;
+}
+
+.btnregister {
+  font-size: 21px;
+  bottom: 80Px;
+  left: 27%;
+  position: absolute;
+  padding: 5px 76px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btnregisteradvisor {
+  font-size: 21px;
+  bottom: 80Px;
+  left: 15%;
+  position: absolute;
+  padding: 5px 76px;
+  border: 0;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--br-lgi);
+
+  &:hover {
+    background-color: #08783e;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+
+

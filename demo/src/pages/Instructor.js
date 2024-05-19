@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Instructor.css";
+
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';

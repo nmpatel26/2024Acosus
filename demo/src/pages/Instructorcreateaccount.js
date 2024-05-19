@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CreateAccount.css";
+// import "./CreateAccount.css";
 import axios from 'axios';
 
 const Instructorcreateaccount = () => {
@@ -55,11 +55,11 @@ const Instructorcreateaccount = () => {
               <div className="form">
                 <div className="formgroup">
                   <label htmlFor="firstname">First Name</label>
-                  <input placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                  <input placeholder="First Name" type = "text"value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
                 </div>
                 <div className="formgroup">
                   <label htmlFor="firstname">Last Name</label>
-                  <input placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+                  <input placeholder="Last Name"  type = "text"s value={lastName} onChange={(e) => setLastName(e.target.value)} required />
                 </div>
                 <div className="formgroup">
                   <label htmlFor="firstname">Email</label>
