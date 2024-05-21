@@ -8,6 +8,7 @@ const app = express();
 
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
@@ -36,6 +37,8 @@ app.use(express.json());
 app.use(cors());
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
 app.get("/demographics/:email", async (req, res) => {
   try {
     const udemo = await demographics
@@ -540,6 +543,19 @@ app.post("/login-user", async (req, res) => {
       req.session.user = { email: user.email };
 
       const token = jwt.sign({ email: user.email }, JWT_SECRET);
+      res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      }); // Expires in 1 day
+      res.cookie("userEmail", user.email, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      res.cookie("userRole", user.role, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+
       return res.json({ status: "ok", data: { token, user } });
     }
 
@@ -556,6 +572,11 @@ app.post("/logout", (req, res) => {
     if (err) {
       return res.json({ status: "error", error: "Failed to destroy session" });
     }
+
+    res.cookie("token", "", { expires: new Date(0) });
+    res.cookie("userEmail", "", { expires: new Date(0) });
+    res.cookie("userRole", "", { expires: new Date(0) });
+
     // console.log('User session destroyed (Logged out)');
     res.json({ status: "ok", message: "Logout successful" });
   });
