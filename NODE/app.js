@@ -551,7 +551,7 @@ app.post("/login-user", async (req, res) => {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
-      res.cookie("userRole", user.role, {
+      res.cookie("userRole", user.userType, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
       });

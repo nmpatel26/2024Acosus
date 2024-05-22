@@ -8,15 +8,12 @@ import {
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import TraingHome from "./pages/TraingHome";
-import Instructor from "./pages/Instructor"
+import Instructor from "./pages/Instructor";
 import Inquestionare from "./pages/Inquestionare";
 import Instructorcreateaccount from "./pages/Instructorcreateaccount";
+import isAuthorized from "./utils/auth";
 
 import { useEffect } from "react";
-
-
-
-
 
 function App() {
   const action = useNavigationType();
@@ -50,7 +47,7 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      
+
       case "/settings":
         title = "";
         metaDescription = "";
@@ -95,12 +92,15 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      
+
       case "/Inquestionare":
         title = "";
         metaDescription = "";
         break;
-      case "/Instructorcreateaccount": title = ""; metaDescription; break;
+      case "/Instructorcreateaccount":
+        title = "";
+        metaDescription;
+        break;
     }
 
     if (title) {
@@ -118,22 +118,58 @@ function App() {
   }, [pathname]);
 
   return (
-
-
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={<Login />}
+      />
 
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
-      <Route path="/Admin" element={<Admin />} />
-      <Route path="/TraingHome" element={<TraingHome />} />
+      <Route
+        path="/Admin"
+        element={
+          <isAuthorized>
+            <Admin />
+          </isAuthorized>
+        }
+      />
 
-      <Route path="/Instructor" element={<Instructor />} />
+      <Route
+        path="/TraingHome"
+        element={
+          <isAuthorized>
+            <TraingHome />
+          </isAuthorized>
+        }
+      />
 
-      <Route path="/Inquestionare" element={<Inquestionare />} />
-      <Route path="/Instructorcreateaccount" element={<Instructorcreateaccount />} />
+      <Route
+        path="/Instructor"
+        element={
+          <isAuthorized>
+            <Instructor />
+          </isAuthorized>
+        }
+      />
+
+      <Route
+        path="/Inquestionare"
+        element={
+          <isAuthorized>
+            <Inquestionare />
+          </isAuthorized>
+        }
+      />
+
+      <Route
+        path="/unauthorized"
+        element={<Unauthorized />}
+      />
     </Routes>
-
   );
 }
 export default App;
