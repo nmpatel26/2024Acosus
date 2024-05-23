@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { HOST_URL } from "../utils/constants";
+import {
+  ADMIN_ROLE,
+  ADVISOR_ROLE,
+  HOST_URL,
+  USER_ROLE,
+} from "../utils/constants";
+// import { useCheckRole } from "../utils/auth";
 
 import axios from "axios";
 
@@ -12,37 +18,61 @@ const ToCreateAccount = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
-  const [userType, setuserType] = useState("");
-  const [adminKey, setadminKey] = useState("");
+  // const [userType, setuserType] = useState("");
+  // const [adminKey, setadminKey] = useState("");
 
   const onLoginButtonContainerClick = useCallback(() => {
-    navigate("/login");
+    navigate("/");
   }, [navigate]);
 
   const handleSubmit = async (e) => {
-    if (userType == "Admin" && adminKey != "Nikunj") {
-      e.preventDefault();
-      alert("Invalid Admin Key");
-    } else {
-      e.preventDefault();
-      if (password !== rePassword) {
-        alert("Passwords do not match");
-        return;
-      }
+    e.preventDefault();
+    // if (userType == "Admin" && adminKey != "Nikunj") {
+    //   alert("Invalid Admin Key");
+    //   return;
+    // }
+
+    if (password !== rePassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    try {
       const response = await axios.post(`${HOST_URL}/register`, {
-        //'http://localhost:5000/register'
         fname: firstName,
         lname: lastName,
         email: email,
         password,
-        userType,
+        userType: "User",
       });
+
       if (response.data.status === "ok") {
-        navigate("/login");
+        // navigate("/"); // Navigate on successful registration
+        refreshSession(); // Refresh the session to login
       } else {
-        alert(response.data.error);
+        alert(response.data.error); // Show error if registration fails
+        refreshSession(); // Refresh the session to login
       }
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert("Failed to register. Please try again."); // Handle errors in registration attempt
     }
+    // else {
+    //   e.preventDefault();
+
+    //   const response = await axios.post(`${HOST_URL}/register`, {
+    //     //'http://localhost:5000/register'
+    //     fname: firstName,
+    //     lname: lastName,
+    //     email: email,
+    //     password,
+    //     userType,
+    //   });
+    //   if (response.data.status === "ok") {
+    //     navigate("/login");
+    //   } else {
+    //     alert(response.data.error);
+    //   }
+    // }
   };
 
   const refreshSession = () => {
@@ -57,11 +87,11 @@ const ToCreateAccount = () => {
         onSubmit={handleSubmit}
       >
         <div style={{ textAlign: "center", fontSize: "25Px" }}>
-          <heading>Register</heading>
+          <h1>Create Account</h1>
         </div>
 
         <div className="form">
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          {/* <div style={{ display: "flex", justifyContent: "center" }}>
             <label class="radio-inline">
               <input
                 class="radio-label"
@@ -84,9 +114,9 @@ const ToCreateAccount = () => {
               />
               Admin
             </label>
-          </div>
+          </div> */}
 
-          {userType == "Admin" ? (
+          {/* {userType == "Admin" ? (
             <div className="formgroup">
               <label>Admin Key</label>
               <input
@@ -97,7 +127,7 @@ const ToCreateAccount = () => {
                 required
               />
             </div>
-          ) : null}
+          ) : null} */}
 
           <div className="formgroup121">
             <label htmlFor="firstname">First Name</label>
@@ -266,21 +296,24 @@ const ToForgotPassword = () => {
 };
 
 const Login = () => {
-  useEffect(() => {
-    const checkLoggedIn = () => {
-      const email = localStorage.getItem("email");
-      if (email) {
-        // Check if email is truthy (not null)
-        // window.location.href = './landing';
-        window.location.href = "./admin";
-      }
-    };
-
-    checkLoggedIn();
-  }, []);
-
   const navigate = useNavigate();
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email) {
+  //       // Check if email is truthy (not null)
+  //       // window.location.href = './landing';
+  //       // window.location.href = "./admin";
+  //       navigate("/dashboard");
+  //     }
+  //   };
 
+  //   checkLoggedIn();
+  // }, []);
+  // const { isAuthorized } = useCheckRole([ADMIN_ROLE, ADVISOR_ROLE, USER_ROLE]);
+  // if (isAuthorized) {
+  //   navigate("/dashboard");
+  // }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState(""); // Updated state variable name]
@@ -339,9 +372,13 @@ const Login = () => {
       saveFullNameToLocalStorage(fullName);
       saveuserTypeToLocalStorage(userType);
       saveEmailToLocalStorage(email); // Save the email to localStorage
-      const userPackage = { fullName, email }; // Include email in the userPackage
+      const userPackage = { fullName, email, userType }; // Include email in the userPackage
       // navigate("/Landing", {state: {userPackage} });
-      navigate("/admin", { state: { userPackage } });
+      // if (userType === "Advisor") {
+      //   console.log("inside advisor");
+      //   window.location.href = "/Instructor";
+      // }
+      navigate("/dashboard", { state: { userPackage } });
     } else {
       alert(response.data.error);
     }

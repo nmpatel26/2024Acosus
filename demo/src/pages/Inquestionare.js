@@ -2,11 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 import {
+  ADMIN_ROLE,
+  ADVISOR_ROLE,
   HOST_URL,
   LOGOUT_URL,
   MODEL_HOST_URL,
   PERSONALITY_URL,
 } from "../utils/constants";
+// import { useCheckRole } from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 const RedirectToTest = () => {
   const handleButtonClick = () => {
@@ -32,6 +36,7 @@ const RedirectToTest = () => {
 };
 
 const ToPersonality = () => {
+  const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
 
   const confirmation = () => {
@@ -82,15 +87,24 @@ const ToPersonality = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
   }, []);
-
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, ADVISOR_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
   const logoutTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -219,6 +233,7 @@ const ToPersonality = () => {
 };
 
 const ToDemographic = () => {
+  const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -257,15 +272,23 @@ const ToDemographic = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
-
     checkLoggedIn();
   }, []);
-
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, ADVISOR_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
   const confirmation = () => {
     alert("Form saved sucessfully");
   };
@@ -471,6 +494,7 @@ const ToDemographic = () => {
 };
 
 const ToAssesmentresult = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     const email = localStorage.getItem("email");
 
@@ -490,15 +514,24 @@ const ToAssesmentresult = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
   }, []);
-
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, ADVISOR_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
   const [mresult, setMResult] = useState();
 
   useEffect(() => {
@@ -533,6 +566,7 @@ const ToAssesmentresult = () => {
 };
 
 const Toquestionare = () => {
+  const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
 
   const confirmation = () => {
@@ -563,15 +597,24 @@ const Toquestionare = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
   }, []);
-
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, ADVISOR_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
   useEffect(() => {
     const logoutTimeout = 600000;
 
@@ -605,6 +648,7 @@ const Toquestionare = () => {
   const [scholarship, setScholarship] = useState("");
   const [income, setIncome] = useState("");
   const [proximity, setProximity] = useState("");
+  const [workStatus, setWorkStatus] = useState("");
   const logoutTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -629,7 +673,9 @@ const Toquestionare = () => {
           data.experience &&
           data.familyGuide &&
           data.scholarship &&
-          data.proximity
+          data.proximity &&
+          data.income &&
+          data.workStatus
         ) {
           setSubmitted(true);
           setGpa(data.gpa || "");
@@ -644,6 +690,7 @@ const Toquestionare = () => {
           setScholarship(data.scholarship || "");
           setIncome(data.income || "");
           setProximity(data.proximity || "");
+          setWorkStatus(data.workStatus || "");
         }
 
         setGpa(data.gpa || "");
@@ -658,6 +705,7 @@ const Toquestionare = () => {
         setScholarship(data.scholarship || "");
         setIncome(data.income || "");
         setProximity(data.proximity || "");
+        setWorkStatus(data.workStatus || "");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -716,6 +764,10 @@ const Toquestionare = () => {
     setProximity(event.target.value);
   };
 
+  const handleWorkStatusChange = (event) => {
+    setWorkStatus(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -747,6 +799,7 @@ const Toquestionare = () => {
           scholarship: scholarship,
           income: income,
           proximity: proximity,
+          workStatus: workStatus,
         }),
       };
 
@@ -809,7 +862,8 @@ const Toquestionare = () => {
           scholarship: scholarship,
           income: income,
           proximity: proximity,
-          result: 56,
+          workStatus: workStatus,
+          result: result,
         }),
       })
         .then((response) => response.json())
@@ -953,6 +1007,18 @@ const Toquestionare = () => {
                 />
               </label>
               <label>
+                Working?
+                <select
+                  value={workStatus}
+                  onChange={handleWorkStatusChange}
+                >
+                  <option value="">Select...</option>
+                  <option value="full-time">Full Time</option>
+                  <option value="part-time">Part Time</option>
+                  <option value="No">Not working</option>
+                </select>
+              </label>
+              <label>
                 <button
                   className="btnsubmitin"
                   value={submitted ? "Update" : "Submit"}
@@ -971,6 +1037,24 @@ const Toquestionare = () => {
 
 const Inquestionare = () => {
   const logoutTimeoutRef = useRef(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      const email = localStorage.getItem("email");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
 
   useEffect(() => {
     const logoutTimeout = 600000;

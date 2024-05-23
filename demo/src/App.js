@@ -11,9 +11,24 @@ import TraingHome from "./pages/TraingHome";
 import Instructor from "./pages/Instructor";
 import Inquestionare from "./pages/Inquestionare";
 import Instructorcreateaccount from "./pages/Instructorcreateaccount";
-import isAuthorized from "./utils/auth";
+// import isAuthorized from "./utils/auth";
+import Unauthorized from "./pages/Unauthorized";
 
 import { useEffect } from "react";
+import LandingPage from "./pages/LandingPage";
+// import { IsAuthorized } from "./utils/auth";
+import AdminHome from "./pages/AdminHome";
+
+// const IsAuthorized = ({ children }) => {
+//   const userRole = Cookies.get("userRole");
+//   if (userRole === "admin" || userRole === "instructor") {
+//     return children;
+//   } else if (userRole === "User") {
+//     return <Navigate to="/" />;
+//   } else {
+//     return <Navigate to="/unauthorized" />;
+//   }
+// };
 
 function App() {
   const action = useNavigationType();
@@ -117,6 +132,8 @@ function App() {
     }
   }, [pathname]);
 
+  // get userRole cookie value and check if it is equal to "admin" or "instructor" and return the child component if it is true
+
   return (
     <Routes>
       <Route
@@ -128,40 +145,60 @@ function App() {
         path="/login"
         element={<Login />}
       />
+      <Route
+        path="/admin"
+        element={
+          // <IsAuthorized allowedRoles={"User"}>
+          <AdminHome />
+          // </IsAuthorized>
+        }
+      />
 
       <Route
-        path="/Admin"
+        path="/dashboard"
         element={
-          <isAuthorized>
-            <Admin />
-          </isAuthorized>
+          // <IsAuthorized allowedRoles={"Admin"}>
+          <Admin />
+          // </IsAuthorized>
         }
+      />
+      <Route
+        path="/student-home"
+        element={<LandingPage />}
       />
 
       <Route
         path="/TraingHome"
         element={
-          <isAuthorized>
-            <TraingHome />
-          </isAuthorized>
+          //  <IsAuthorized allowedRoles={"Admin"}>
+          <TraingHome />
+          // </IsAuthorized>
         }
       />
 
       <Route
         path="/Instructor"
         element={
-          <isAuthorized>
-            <Instructor />
-          </isAuthorized>
+          //  <IsAuthorized allowedRoles={("Admin", "Advisor")}>
+          <Instructor />
+          // </IsAuthorized>
         }
       />
 
       <Route
         path="/Inquestionare"
         element={
-          <isAuthorized>
-            <Inquestionare />
-          </isAuthorized>
+          //  <IsAuthorized allowedRoles={("Admin", "Advisor")}>
+          <Inquestionare />
+          // </IsAuthorized>
+        }
+      />
+      <Route
+        path="/Instructorcreateaccount"
+        element={
+          //  <IsAuthorized allowedRoles={("Admin", "Advisor")}>
+          <Instructorcreateaccount />
+          // </IsAuthorized>
         }
       />
 

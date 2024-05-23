@@ -204,6 +204,7 @@ app.post("/questionaire", async (req, res) => {
     scholarship,
     income,
     proximity,
+    workStatus,
   } = req.body;
 
   try {
@@ -224,6 +225,7 @@ app.post("/questionaire", async (req, res) => {
         scholarship,
         income,
         proximity,
+        workStatus,
       },
       { upsert: true } // Create a new document if it doesn't exist
     );

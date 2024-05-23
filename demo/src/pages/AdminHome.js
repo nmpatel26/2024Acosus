@@ -4,7 +4,15 @@ import { useNavigate } from "react-router-dom";
 import "./AdminHome.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { HOST_URL, LOGOUT_URL } from "../utils/constants";
+import {
+  ADMIN_ROLE,
+  ADVISOR_ROLE,
+  HOST_URL,
+  LOGOUT_URL,
+  USER_ROLE,
+} from "../utils/constants";
+// import { useCheckRole } from "../utils/auth";
+// import Unauthorized from "./Unauthorized";
 
 const AdminHome = () => {
   const logoutTimeoutRef = useRef(null);
@@ -13,14 +21,38 @@ const AdminHome = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
+    // checkRole([ADMIN_ROLE]);
   }, []);
+
+  // if (!isLoggedIn) {
+  //   handleLogout(); w
+  // }
+  // if (!isAuthorized) {
+  //   navigate("/unauthorized");
+  // }
+  // const handleLogout = () => {
+  //   serverSideLogout();
+  //   navigate("/login");
+  //   // Handle any additional tasks like redirecting to login
+  // // };
+  // const { isAuthorized } = useCheckRole([ADMIN_ROLE]);
+  // console.log("admin home isAuthorized", isAuthorized);
+  // if (isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
 
   useEffect(() => {
     const logoutTimeout = 600000;
