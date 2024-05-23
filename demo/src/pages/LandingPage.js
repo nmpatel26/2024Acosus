@@ -7,17 +7,22 @@ import {
   LOGOUT_URL,
   MODEL_HOST_URL,
   PERSONALITY_URL,
+  USER_ROLE,
+  ADMIN_ROLE,
 } from "../utils/constants";
+// import { useCheckRole } from "../utils/auth";
+// import Unauthorized from "./Unauthorized";
 
 const ToDemographic = () => {
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const email = localStorage.getItem("email");
     const selectedEmail = localStorage.getItem("selectedEmail");
     const apiUrl = selectedEmail
-      ? `${HOST_URL}/Personality` + selectedEmail
-      : `${HOST_URL}/Personality` + email; //'http://localhost:5000/Personality/'
+      ? `${HOST_URL}/personality/` + selectedEmail
+      : `${HOST_URL}/Personality/` + email; //'http://localhost:5000/Personality/'
 
     // fetch('http://localhost:5000/demographics/' + email)
     fetch(apiUrl)
@@ -48,15 +53,25 @@ const ToDemographic = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== USER_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
   }, []);
 
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, USER_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
   const confirmation = () => {
     alert("Form saved sucessfully");
   };
@@ -65,8 +80,8 @@ const ToDemographic = () => {
     const email = localStorage.getItem("email");
     const selectedEmail = localStorage.getItem("selectedEmail");
     const apiUrl = selectedEmail
-      ? `${HOST_URL}/demographics` + selectedEmail
-      : `${HOST_URL}/demographics` + email; //'http://localhost:5000/demographics/' + email;
+      ? `${HOST_URL}/demographics/` + selectedEmail
+      : `${HOST_URL}/demographics/` + email; //'http://localhost:5000/demographics/' + email;
 
     // fetch('http://localhost:5000/demographics/' + email)
     fetch(apiUrl)
@@ -263,6 +278,24 @@ const ToDemographic = () => {
 
 const ToQuestionaire = () => {
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      const email = localStorage.getItem("email");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== USER_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
 
   const confirmation = () => {
     // alert('Form saved sucessfully');
@@ -284,6 +317,7 @@ const ToQuestionaire = () => {
   const [scholarship, setScholarship] = useState("");
   const [income, setIncome] = useState("");
   const [proximity, setProximity] = useState("");
+  const [workStatus, setWorkStatus] = useState("");
   const logoutTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -291,8 +325,8 @@ const ToQuestionaire = () => {
 
     const selectedEmail = localStorage.getItem("selectedEmail");
     const apiUrl = selectedEmail
-      ? `${HOST_URL}/questionaire` + selectedEmail
-      : `${HOST_URL}/questionaire` + email; //'http://localhost:5000/questionaire/' + email;
+      ? `${HOST_URL}/questionaire/` + selectedEmail
+      : `${HOST_URL}/questionaire/` + email; //'http://localhost:5000/questionaire/' + email;
 
     // fetch('http://localhost:5000/questionaire/' + selectedEmail)
     fetch(apiUrl)
@@ -308,7 +342,8 @@ const ToQuestionaire = () => {
           data.experience &&
           data.familyGuide &&
           data.scholarship &&
-          data.proximity
+          data.proximity &&
+          data.workStatus
         ) {
           setSubmitted(true);
           setGpa(data.gpa || "");
@@ -323,6 +358,7 @@ const ToQuestionaire = () => {
           setScholarship(data.scholarship || "");
           setIncome(data.income || "");
           setProximity(data.proximity || "");
+          setWorkStatus(data.workStatus || "");
         }
 
         setGpa(data.gpa || "");
@@ -337,6 +373,7 @@ const ToQuestionaire = () => {
         setScholarship(data.scholarship || "");
         setIncome(data.income || "");
         setProximity(data.proximity || "");
+        setWorkStatus(data.workStatus || "");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -395,6 +432,10 @@ const ToQuestionaire = () => {
     setProximity(event.target.value);
   };
 
+  const handleWorkStatusChange = (event) => {
+    setWorkStatus(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -426,6 +467,7 @@ const ToQuestionaire = () => {
           scholarship: scholarship,
           income: income,
           proximity: proximity,
+          workStatus: workStatus,
         }),
       };
 
@@ -483,7 +525,8 @@ const ToQuestionaire = () => {
           scholarship: scholarship,
           income: income,
           proximity: proximity,
-          result: 56,
+          workStatus: workStatus,
+          result: result,
         }),
       })
         .then((response) => response.json())
@@ -626,6 +669,18 @@ const ToQuestionaire = () => {
               />
             </label>
             <label>
+              Working?
+              <select
+                value={workStatus}
+                onChange={handleWorkStatusChange}
+              >
+                <option value="">Select...</option>
+                <option value="full-time">Full Time</option>
+                <option value="part-time">Part Time</option>
+                <option value="No">Not working</option>
+              </select>
+            </label>
+            <label>
               <button
                 className="Questionairebtnsubmit"
                 value={submitted ? "Update" : "Submit"}
@@ -663,6 +718,24 @@ const RedirectToTest = () => {
 
 const ToPersonality = () => {
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      const email = localStorage.getItem("email");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== USER_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
 
   const confirmation = () => {
     alert("Form saved sucessfully");
@@ -672,8 +745,8 @@ const ToPersonality = () => {
     const email = localStorage.getItem("email");
     const selectedEmail = localStorage.getItem("selectedEmail");
     const apiUrl = selectedEmail
-      ? `${HOST_URL}/Personality` + selectedEmail
-      : `${HOST_URL}/Personality` + email; //'http://localhost:5000/Personality/' + email;
+      ? `${HOST_URL}/Personality/` + selectedEmail
+      : `${HOST_URL}/Personality/` + email; //'http://localhost:5000/Personality/' + email;
 
     // fetch('http://localhost:5000/Personality/' + email)
     fetch(apiUrl)
@@ -689,17 +762,21 @@ const ToPersonality = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const checkLoggedIn = () => {
-      const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
-      }
-    };
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
 
-    checkLoggedIn();
-  }, []);
+  //   checkLoggedIn();
+  // }, []);
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, USER_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
 
   const [personalityScore, setPersonalityScore] = useState("");
 
@@ -707,8 +784,8 @@ const ToPersonality = () => {
     const email = localStorage.getItem("email");
     const selectedEmail = localStorage.getItem("selectedEmail");
     const apiUrl = selectedEmail
-      ? `${HOST_URL}/Personality` + selectedEmail
-      : `${HOST_URL}/Personality` + email; //'http://localhost:5000/Personality/' + email;
+      ? `${HOST_URL}/Personality/` + selectedEmail
+      : `${HOST_URL}/Personality/` + email; //'http://localhost:5000/Personality/' + email;
 
     // fetch('http://localhost:5000/personality/' + email)
     fetch(apiUrl)
@@ -809,10 +886,31 @@ const ToPersonality = () => {
 };
 
 const ToAssesmentResult = () => {
+  const navigate = useNavigate();
+  const [submitted, setSubmitted] = useState(false);
+  const [personalityScore, setPersonalityScore] = useState("");
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      const email = localStorage.getItem("email");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== USER_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
+
   useEffect(() => {
     const email = localStorage.getItem("email");
 
-    fetch(`${HOST_URL}/Personality` + email) //'http://localhost:5000/Personality/' + email
+    fetch(`${HOST_URL}/Personality/` + email) //'http://localhost:5000/Personality/' + email
       .then((response) => response.json())
       .then((data) => {
         if (data.personalityScore) {
@@ -825,17 +923,21 @@ const ToAssesmentResult = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const checkLoggedIn = () => {
-      const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
-      }
-    };
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
 
-    checkLoggedIn();
-  }, []);
+  //   checkLoggedIn();
+  // }, []);
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, USER_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
 
   const [mresult, setMResult] = useState();
 
@@ -843,8 +945,8 @@ const ToAssesmentResult = () => {
     const email = localStorage.getItem("email");
     const selectedEmail = localStorage.getItem("selectedEmail");
     const apiUrl = selectedEmail
-      ? `${HOST_URL}/modelResponses` + selectedEmail
-      : `${HOST_URL}/modelResponses` + email; //'http://localhost:5000/modelResponses/' + email;
+      ? `${HOST_URL}/modelResponses/` + selectedEmail
+      : `${HOST_URL}/modelResponses/` + email; //'http://localhost:5000/modelResponses/' + email;
 
     // fetch("http://localhost:5000/modelResponses/" + email, {
     fetch(apiUrl, {
@@ -871,6 +973,24 @@ const ToAssesmentResult = () => {
 };
 
 const ToSettings = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      const email = localStorage.getItem("email");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== USER_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
   const [email, setEmail] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -906,7 +1026,7 @@ const ToSettings = () => {
   useEffect(() => {
     const email = localStorage.getItem("email");
 
-    fetch(`${HOST_URL}/Personality` + email) //'http://localhost:5000/Personality/'
+    fetch(`${HOST_URL}/Personality/` + email) //'http://localhost:5000/Personality/'
       .then((response) => response.json())
       .then((data) => {
         setPersonalityScore(data.personalityScore || "");
@@ -916,18 +1036,33 @@ const ToSettings = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const checkLoggedIn = () => {
-      const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
-      }
-    };
+  // useEffect(() => {
+  //   // const checkLoggedIn = () => {
+  //   //   const email = localStorage.getItem("email");
+  //   //   if (email === null) {
+  //   //     window.location.href = "../login";
+  //   //     alert("Please login first.");
+  //   //   }
+  //   // };
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     const userRole = localStorage.getItem("userType");
+  //     if (!email || email === "undefined" || email === "null") {
+  //       navigate("/login");
+  //     }
 
-    checkLoggedIn();
-  }, []);
+  //     if (userRole !== "Admin" && userRole !== "User") {
+  //       // navigate("/unauthorized");
+  //       return <Unauthorized />;
+  //     }
+  //   };
 
+  //   checkLoggedIn();
+  // }, []);
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, USER_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
   const logoutTimeoutRef = useRef(null);
 
   const [personalityScore, setPersonalityScore] = useState("");
@@ -935,7 +1070,7 @@ const ToSettings = () => {
   useEffect(() => {
     const email = localStorage.getItem("email");
 
-    fetch(`${HOST_URL}/Personality` + email) //'http://localhost:5000/Personality/' + email
+    fetch(`${HOST_URL}/Personality/` + email) //'http://localhost:5000/Personality/' + email
       .then((response) => response.json())
       .then((data) => {
         setPersonalityScore(data.personalityScore || "");
@@ -1054,14 +1189,37 @@ const LandingPage = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== USER_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
   }, []);
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
+
+  //   checkLoggedIn();
+  // }, []);
+
+  // const { isAuthorized } = useCheckRole([ADMIN_ROLE, USER_ROLE]);
+  // if (!isAuthorized) {
+  //   console.log(isAuthorized);
+  //   return <Unauthorized />;
+  // }
 
   useEffect(() => {
     const logoutTimeout = 600000;

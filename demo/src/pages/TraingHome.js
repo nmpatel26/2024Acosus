@@ -6,26 +6,46 @@ import axios from "axios";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  ADMIN_ROLE,
   HOST_URL,
   LOGOUT_URL,
   MODEL_HOST_URL,
   MODEL_LOAD_URL,
 } from "../utils/constants";
-
+import { useNavigate } from "react-router-dom";
 const ToModelFeatures = () => {
   const logoutTimeoutRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
+    // checkRole([ADMIN_ROLE]);
   }, []);
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
+
+  //   checkLoggedIn();
+  // }, []);
 
   const model = {
     modelName: "", // This property will be assigned the button value
@@ -61,18 +81,37 @@ const ToModelFeatures = () => {
 const ToData = () => {
   const [data, setData] = useState([]);
   const logoutTimeoutRef = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
+    // checkRole([ADMIN_ROLE]);
   }, []);
+
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
+
+  //   checkLoggedIn();
+  // }, []);
 
   useEffect(() => {
     fetch(`${HOST_URL}/getModelHistory`, {
@@ -190,18 +229,37 @@ const ToData = () => {
 
 const TraingHome = () => {
   const logoutTimeoutRef = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
+    // checkRole([ADMIN_ROLE]);
   }, []);
+
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
+
+  //   checkLoggedIn();
+  // }, []);
 
   useEffect(() => {
     const logoutTimeout = 600000;

@@ -6,22 +6,57 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { HOST_URL, LOGOUT_URL } from "../utils/constants";
+import {
+  ADMIN_ROLE,
+  ADVISOR_ROLE,
+  HOST_URL,
+  LOGOUT_URL,
+} from "../utils/constants";
+// import { useCheckRole } from "../utils/auth";
+// import Unauthorized from "./Unauthorized";
 
 const ToInstudent = () => {
   const logoutTimeoutRef = useRef(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const navigate = useNavigate();
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
+
+  //   checkLoggedIn();
+  // }, []);
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, ADVISOR_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("userType") === "admin") {
+      setIsAdmin(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -164,6 +199,23 @@ const ToInstudent = () => {
 };
 
 const ToSearchUser = () => {
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      const email = localStorage.getItem("email");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        navigate("/unauthorized");
+        // return <Unauthorized />;
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
   const [emails, setEmails] = useState([]);
   // const [selectedEmail, setSelectedEmail] = useState('');
   const [demographicData, setDemographicData] = useState(null);
@@ -398,21 +450,48 @@ const ToSearchUser = () => {
 };
 
 const Instructor = () => {
+  console.log("Instructor");
   const logoutTimeoutRef = useRef(null);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     const checkLoggedIn = () => {
       const email = localStorage.getItem("email");
-      if (email === null) {
-        window.location.href = "../login";
-        alert("Please login first.");
+      const userRole = localStorage.getItem("userType");
+      // console.log("userRole", userRole);
+      if (!email || email === "undefined" || email === "null") {
+        navigate("/login");
+      }
+
+      if (userRole !== ADMIN_ROLE && userRole !== ADVISOR_ROLE) {
+        console.log("unauthorized");
+        navigate("/unauthorized");
+        // return <Unauthorized />;
       }
     };
 
     checkLoggedIn();
   }, []);
+  // useEffect(() => {
+  //   const checkLoggedIn = () => {
+  //     const email = localStorage.getItem("email");
+  //     if (email === null) {
+  //       window.location.href = "../login";
+  //       alert("Please login first.");
+  //     }
+  //   };
 
+  //   checkLoggedIn();
+  // }, []);
+  // const { isAuthorized, isLoggedIn } = useCheckRole([ADMIN_ROLE, ADVISOR_ROLE]);
+  // if (isLoggedIn === false || isAuthorized === false) {
+  //   return <Unauthorized />;
+  // }
+  useEffect(() => {
+    if (localStorage.getItem("userType") === "Admin") {
+      setIsAdmin(true);
+    }
+  }, []);
   useEffect(() => {
     const logoutTimeout = 600000;
 
@@ -520,6 +599,10 @@ const Instructor = () => {
     }
   };
 
+  const toAdminHome = () => {
+    window.location.href = "/Admin";
+  };
+
   //fetching all user
   const getAllUser = () => {
     fetch(`${HOST_URL}/getAllUser`, {
@@ -571,7 +654,6 @@ const Instructor = () => {
                                     <button onClick={StudentSearch} className="btn101" >Instructor Home </button>
                                 </div>
                             </div> */}
-
               <div class="form-groupin101">
                 <button
                   onClick={() => setMenuContent("default")}
@@ -598,6 +680,18 @@ const Instructor = () => {
                   Student Search{" "}
                 </button>
               </div>
+              {/* // add button if isAdmin is true */}
+              {isAdmin && (
+                <div className="form-groupin101">
+                  <button
+                    onClick={toAdminHome}
+                    className="btn105"
+                  >
+                    Admin Home
+                  </button>
+                </div>
+              )}
+
               <div class="form-groupin101">
                 <button
                   onClick={serverSideLogout}

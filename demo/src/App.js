@@ -8,15 +8,27 @@ import {
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import TraingHome from "./pages/TraingHome";
-import Instructor from "./pages/Instructor"
+import Instructor from "./pages/Instructor";
 import Inquestionare from "./pages/Inquestionare";
 import Instructorcreateaccount from "./pages/Instructorcreateaccount";
+// import isAuthorized from "./utils/auth";
+import Unauthorized from "./pages/Unauthorized";
 
 import { useEffect } from "react";
+import LandingPage from "./pages/LandingPage";
+// import { IsAuthorized } from "./utils/auth";
+import AdminHome from "./pages/AdminHome";
 
-
-
-
+// const IsAuthorized = ({ children }) => {
+//   const userRole = Cookies.get("userRole");
+//   if (userRole === "admin" || userRole === "instructor") {
+//     return children;
+//   } else if (userRole === "User") {
+//     return <Navigate to="/" />;
+//   } else {
+//     return <Navigate to="/unauthorized" />;
+//   }
+// };
 
 function App() {
   const action = useNavigationType();
@@ -50,7 +62,7 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      
+
       case "/settings":
         title = "";
         metaDescription = "";
@@ -95,12 +107,15 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      
+
       case "/Inquestionare":
         title = "";
         metaDescription = "";
         break;
-      case "/Instructorcreateaccount": title = ""; metaDescription; break;
+      case "/Instructorcreateaccount":
+        title = "";
+        metaDescription;
+        break;
     }
 
     if (title) {
@@ -117,23 +132,81 @@ function App() {
     }
   }, [pathname]);
 
+  // get userRole cookie value and check if it is equal to "admin" or "instructor" and return the child component if it is true
+
   return (
-
-
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={<Login />}
+      />
 
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
+      <Route
+        path="/admin"
+        element={
+          // <IsAuthorized allowedRoles={"User"}>
+          <AdminHome />
+          // </IsAuthorized>
+        }
+      />
 
-      <Route path="/Admin" element={<Admin />} />
-      <Route path="/TraingHome" element={<TraingHome />} />
+      <Route
+        path="/dashboard"
+        element={
+          // <IsAuthorized allowedRoles={"Admin"}>
+          <Admin />
+          // </IsAuthorized>
+        }
+      />
+      <Route
+        path="/student-home"
+        element={<LandingPage />}
+      />
 
-      <Route path="/Instructor" element={<Instructor />} />
+      <Route
+        path="/TraingHome"
+        element={
+          //  <IsAuthorized allowedRoles={"Admin"}>
+          <TraingHome />
+          // </IsAuthorized>
+        }
+      />
 
-      <Route path="/Inquestionare" element={<Inquestionare />} />
-      <Route path="/Instructorcreateaccount" element={<Instructorcreateaccount />} />
+      <Route
+        path="/Instructor"
+        element={
+          //  <IsAuthorized allowedRoles={("Admin", "Advisor")}>
+          <Instructor />
+          // </IsAuthorized>
+        }
+      />
+
+      <Route
+        path="/Inquestionare"
+        element={
+          //  <IsAuthorized allowedRoles={("Admin", "Advisor")}>
+          <Inquestionare />
+          // </IsAuthorized>
+        }
+      />
+      <Route
+        path="/Instructorcreateaccount"
+        element={
+          //  <IsAuthorized allowedRoles={("Admin", "Advisor")}>
+          <Instructorcreateaccount />
+          // </IsAuthorized>
+        }
+      />
+
+      <Route
+        path="/unauthorized"
+        element={<Unauthorized />}
+      />
     </Routes>
-
   );
 }
 export default App;
