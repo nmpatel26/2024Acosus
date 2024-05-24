@@ -686,6 +686,6 @@ app.post("/deleteModel", async (req, res) => {
 });
 
 // root endpoint
-app.get("/", (req, res) => {
-  res.send("Welcome to the ACOSUS server");
-});
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the ACOSUS server");
+// });
