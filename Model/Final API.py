@@ -14,6 +14,7 @@ from tensorflow import keras
 # from keras.models import Model
 # from keras.layers import Dense
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, ReLU
 from tensorflow.keras.layers import Dense,Activation,Dropout
 from tensorflow.keras.optimizers import Adam
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -21,6 +22,11 @@ from sklearn.model_selection import train_test_split
 from datetime import datetime
 from pymongo import MongoClient
 import numpy as np
+from tensorflow.keras.losses import MeanSquaredError
+
+from tensorflow.keras.models import load_model
+# from tensorflow.keras.layers import ReLU
+from tensorflow.keras.metrics import MeanSquaredError
 
 app = Flask(__name__)
 CORS(app)
@@ -45,6 +51,10 @@ def get_current_model():
     global current_model
     return current_model
 
+# Custom metric
+# @keras.saving.register_keras_serializable()
+# def mse(y_true, y_pred):
+#    return MeanSquaredError()(y_true, y_pred)
 
 def transform_data(data):
     data_df=data
@@ -59,7 +69,7 @@ def transform_data(data):
     global transformed_data 
     print("Numerical Columns",numerical_cols,"\tString columns",string_cols)
     unique_jobs=[]
-    major_data=pd.read_excel('Model/majors and jobs.xlsx')
+    major_data=pd.read_excel('Model/majors_and_jobs.xlsx')
     major_data=pd.DataFrame(major_data)
     StudentExposure={'Project':5,'Paper':4,'Extra-classes':3,'Conference':2}
     index=0
@@ -103,7 +113,7 @@ def scaling_data(action):
         prediction_set=Min_max_scale.transform(transformed_data)
         return(prediction_set)
     elif str(action).lower()=='train':
-        x=transformed_data[data_order.columns]
+        x=transformed_data[data_order]
         y=transformed_data['Success_Rate']
         x=Min_max_scale.transform(x)
         return(x,y)
@@ -127,7 +137,7 @@ def predict():
     data_df['Course'] = ["Information Systems"]
     # for i in data:
     #     data_df[i] = [data[i]]
-    
+    #testing....
     # data_df['GPA'] = [data['gpa']]
     # data_df['Credit_Completion'] = [data['credits']]
     # data_df['SAT'] = [data['satScore']]
@@ -138,8 +148,6 @@ def predict():
     # data_df['Student_Exposure'] = [data['experience']]
     # data_df['Family_Contribution'] = [data['familyGuide']]
     # data_df['PersonalityTraits_Scores'] = [data['personalityScore']]
-    # data_df['Accessibility'] = [data['proximity']]
-    # data_df['Financial_Status'] = [data['income']]
 
     print(data)
     # data = request.data
@@ -151,7 +159,15 @@ def predict():
     transformed_data=pandas.DataFrame()
     transform_data(data_df)
     predict_data=scaling_data(action)
-    model= load_model('Model/finalized_model.h5')
+    #@tf.keras.utils.register_keras_serializable()
+    #custom_objects = {
+      #  'ReLU': ReLU,
+     #   #'mse': mse
+    #}
+    #model = load_model('finalized_model.h5', custom_objects=custom_objects)
+    # model= load_model('finalized_model.h5')
+    model = load_model('neural_network2024-05-24.h5', custom_objects={"ReLU": ReLU})
+
     predicted=model.predict(predict_data)
 
     predicted_list = round(predicted[0][0],2).tolist()
@@ -178,34 +194,48 @@ def trainNeural():
     transform_data(data_df)
     x,y=scaling_data(action)
     traindata_x,testdata_x,traindata_y,testdata_y=train_test_split(x,y,test_size=0.2)
-    print(traindata_y,testdata_y)
-    model=SequentialFeatureSelector([Dense(50, input_shape=(13,),activation='ReLU'),
+    print(f"traindata_x: {traindata_x}")
+    print(f"traindata_y: {traindata_y}")
+    # print(traindata_x.describe())  # Summarize data to check for any anomalies
+    # print(traindata_y.describe())
+    # print("NaNs in traindata_x:", traindata_x.isna().sum().sum())
+    # print("NaNs in traindata_y:", traindata_y.isna().sum())
+    # print("Infs in traindata_x:", np.isinf(traindata_x).sum().sum())
+    # print("Infs in traindata_y:", np.isinf(traindata_y).sum())
+
+    # print(testdata_y)
+    model=Sequential([Dense(50, input_shape=(13,),activation='relu'),
                  Dropout(0.1),
-                 Dense(50,activation='ReLU'),
+                 Dense(50,activation='relu'),
                  Dropout(0.1),
-                 Dense(50,activation='ReLU'),
+                 Dense(50,activation='relu'),
                  Dropout(0.1),
-                 Dense(50,activation='ReLU'),
+                 Dense(50,activation='relu'),
                  Dropout(0.1),
-                 Dense(50,activation='ReLU'),
+                 Dense(50,activation='relu'),
                  Dropout(0.1),
-                 Dense(50,activation='ReLU'),
+                 Dense(50,activation='relu'),
                  Dropout(0.1),
-                 Dense(1,activation='ReLU')])
-    model.compile(optimizer='adam',loss='mse',metrics=['accuracy'])
+                 Dense(1,activation='linear')])
+    model.compile(optimizer='adam',loss='mean_squared_error' ,metrics=['mean_squared_error'])
     model.summary()
     model_fit=model.fit(x=traindata_x,y=traindata_y,epochs=20,verbose=2)
     model_validate=model.predict(testdata_x)
     mae=mean_absolute_error(testdata_y,model_validate)
-    mse=mean_squared_error(testdata_y,model_validate)
+    # mse=mean_squared_error(testdata_y,model_validate)
+
+    #edited........
+    mse_metric = MeanSquaredError()
+    mse_metric.update_state(testdata_y, model_validate)
+    mse = mse_metric.result().numpy() 
     r2_sc=r2_score(testdata_y,model_validate)
     current_date=datetime.now().date()
     model.save(f'neural_network{current_date}.h5')
     data_to_send = {
     'absolute': mae.tolist(),  # Convert NumPy array to a Python list
-    'squared': mse.tolist(),
+    'squared': [float(mse)],
     'r2': r2_sc.tolist()
-}
+    }
     return json.dumps(data_to_send)
     
     
