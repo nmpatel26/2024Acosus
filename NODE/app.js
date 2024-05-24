@@ -25,22 +25,23 @@ const EMAIL_SERVICE = env.EMAIL_SERVICE || "gmail";
 // SESSION SECRET
 const SESSION_SECRET = env.SESSION_SECRET;
 
-const allowedOrigins = [
-  "http://174.138.124.162",
-  "http://your-other-domain.com",
-];
+// const allowedOrigins = [
+//   "http://174.138.124.162",
+//   "http://localhost:3000",
+//   "http://localhost:5000",
+// ];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization",
-};
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: "GET,POST,PUT,DELETE",
+//   allowedHeaders: "Content-Type,Authorization",
+// };
 
 // Initialize Express app
 app.use(
@@ -51,17 +52,27 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(cors());
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  console.log("Request URL:", req.originalUrl);
-  console.log("Request Type:", req.method);
-  console.log("Request Headers:", req.headers);
+  console.log("req w/o", req.url);
+  if (req.url.startsWith("/api")) {
+    // remove /api from the URL
+    req.url = req.url.replace("/api", ""); // Modify the request URL
+    // req.url = `/api${req.url}`; // Modify the request URL
+    console.log("req with api:", req.url);
+  }
   next();
 });
+// app.use((req, res, next) => {
+//   console.log("Request URL:", req.originalUrl);
+//   console.log("Request Type:", req.method);
+//   console.log("Request Headers:", req.headers);
+//   next();
+// });
 
 app.get("/demographics/:email", async (req, res) => {
   try {
@@ -557,6 +568,7 @@ app.post("/Page1", async (req, res) => {
 // Login endpoint
 app.post("/login-user", async (req, res) => {
   const { email, password } = req.body;
+  console.log("Login", email);
 
   try {
     const user = await User.findOne({ email });
