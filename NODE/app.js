@@ -25,6 +25,23 @@ const EMAIL_SERVICE = env.EMAIL_SERVICE || "gmail";
 // SESSION SECRET
 const SESSION_SECRET = env.SESSION_SECRET;
 
+const allowedOrigins = [
+  "http://174.138.124.162",
+  "http://your-other-domain.com",
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+};
+
 // Initialize Express app
 app.use(
   session({
@@ -34,10 +51,17 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use((req, res, next) => {
+  console.log("Request URL:", req.originalUrl);
+  console.log("Request Type:", req.method);
+  console.log("Request Headers:", req.headers);
+  next();
+});
 
 app.get("/demographics/:email", async (req, res) => {
   try {
@@ -647,4 +671,9 @@ app.post("/deleteModel", async (req, res) => {
     console.log(error);
     res.status(500).send({ status: "Error", data: "Failed to delete" });
   }
+});
+
+// root endpoint
+app.get("/", (req, res) => {
+  res.send("Welcome to the ACOSUS server");
 });

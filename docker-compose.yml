@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  backend:
+    build: ./Node
+    ports:
+      - "5002:5000"
+    env_file:
+      - ./Node/.env
+    networks:
+      - app-network
+  frontend:
+    build: ./demo
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+  # python-model:
+  #   build: ./Model
+  #   ports:
+  #     - "5000:5000"
+  #   networks:
+  #     - app-network
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx:/etc/nginx/conf.d
+  #     - ./certbot/conf:/etc/letsencrypt
+  #     - ./certbot/www:/var/www/certbot
+  #   depends_on:
+  #     - node-api
+  #     - react-app
+  #     - python-model
+  #   networks:
+  #     - app-network
+networks:
+  app-network:
+    driver: bridge
